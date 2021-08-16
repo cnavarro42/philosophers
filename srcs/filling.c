@@ -1,0 +1,54 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   filling.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/12 13:23:37 by cnavarro          #+#    #+#             */
+/*   Updated: 2021/08/12 16:59:43 by cnavarro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../headers/philosophers.h"
+
+void	fill_dat(int argc, char **argv, t_datos *dat)
+{
+	pthread_mutex_t *fork_mutex;
+	int i;
+
+	fork_mutex = malloc(sizeof(pthread_mutex_t) * dat->number_of_philo);
+	i = 0;
+	while(i < dat->number_of_philo)
+	{
+		pthread_mutex_init(&fork_mutex[i], NULL);
+		pthread_mutex_unlock(&fork_mutex[i]);
+	}
+	dat->philo = malloc(sizeof(pthread_t) * dat->number_of_philo);
+	dat->phil = malloc(sizeof(t_philo) * dat->number_of_philo);
+	if (argc == 6)
+		dat->eating_bool = 1;
+	else
+		dat->eating_bool = 0;
+	dat->number_of_philo = ft_atoi(argv[1]);
+	dat->time_to_die = ft_atoi(argv[2]);
+	dat->time_to_eat = ft_atoi(argv[3]);
+	dat->time_to_sleep = ft_atoi(argv[4]);
+	if (dat->eating_bool)
+		dat->times_eating = ft_atoi(argv[5]);
+	dat->fork_mutex = fork_mutex;
+}
+
+void	fill_philo(t_datos *dat, t_philo *phil, int i)
+{
+	phil->time_to_die = dat->time_to_die;
+	phil->time_to_eat = dat->time_to_eat;
+	phil->time_to_sleep = dat->time_to_sleep;
+	phil->times_eating = dat->times_eating;
+	phil->im_the = i;
+	if (i == dat->number_of_philo)
+		phil->r_fork = dat->fork_mutex[0];
+	else
+		phil->r_fork = dat->fork_mutex[i + 1];
+	phil->l_fork = dat->fork_mutex[i];
+}
