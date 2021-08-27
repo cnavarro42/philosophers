@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 13:23:37 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/27 17:47:29 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/27 18:16:54 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	fill_dat(int argc, char **argv, t_datos *dat)
 {
 	pthread_mutex_t *fork_mutex;
-	int i;
 
+	int i;
 	i = 0;
 	if (argc == 6)
 		dat->eating_bool = 1;
@@ -40,6 +40,8 @@ void	fill_dat(int argc, char **argv, t_datos *dat)
 		pthread_mutex_unlock(&fork_mutex[i]);
 		i++;
 	}
+	pthread_mutex_init(dat->printing, NULL);
+	pthread_mutex_unlock(dat->printing);
 	dat->fork_mutex = fork_mutex;
 }
 
@@ -58,5 +60,5 @@ void	fill_philo(t_datos *dat, t_philo *phil, int i)
 	else
 		phil->r_fork = dat->fork_mutex[i + 1];
 	phil->l_fork = dat->fork_mutex[i];
-	printf("eeeeating_bool: %i\n", dat->eating_bool);
+	phil->printing = dat->printing;
 }
