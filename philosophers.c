@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/12 16:38:16 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/26 19:22:44 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv)
 {
 	t_datos *dat;
 	int i;
+	
 
 	dat = ft_calloc(sizeof(t_datos), 1);
 	arg_errors(argc, argv);

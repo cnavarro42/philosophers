@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 11:07:35 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/12 16:25:28 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/27 17:06:16 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,40 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-
-
-typedef struct	s_philo
+typedef struct			s_philo
 {
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	times_eating;
-	int	im_the;
-	pthread_mutex_t r_fork;
-	pthread_mutex_t l_fork;
-}				t_philo;
+	uint64_t			time_to_die;
+	uint64_t			time_to_eat;
+	uint64_t			time_to_sleep;
+	int					times_eating;
+	uint64_t			last_time_eating;
+	int					eating_bool;
+	int					im_the;
+	uint64_t			time_start;
+	pthread_mutex_t		r_fork;
+	pthread_mutex_t		l_fork;
+	int					*is_dead;
+}						t_philo;
 
-typedef struct	s_datos
+typedef struct			s_datos
 {
-	int			number_of_philo;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			times_eating;
-	int			eating_bool;
-	t_philo		*phil;
-	pthread_t	*philo;
-	pthread_mutex_t *fork_mutex;
-}				t_datos;
-void	*philo_routine(void *arg);
-void	arg_errors(int argc, char **argv);
-void	fill_philo(t_datos *dat, t_philo *phil, int i);
-void	fill_dat(int argc, char **argv, t_datos *dat);
+	int					number_of_philo;
+	uint64_t			time_to_die;
+	uint64_t			time_to_eat;
+	uint64_t			time_to_sleep;
+	int					times_eating;
+	int					eating_bool;
+	uint64_t			time_start;
+	t_philo				*phil;
+	pthread_t			*philo;
+	pthread_mutex_t		*fork_mutex;
+	int					is_dead;
+}						t_datos;
+
+void		*philo_routine(void *arg);
+void		arg_errors(int argc, char **argv);
+void		fill_philo(t_datos *dat, t_philo *phil, int i);
+void		fill_dat(int argc, char **argv, t_datos *dat);
+void		ft_usleep(uint64_t time);
+uint64_t	gettime(void);
 #endif
