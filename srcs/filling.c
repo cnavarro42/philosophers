@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 13:23:37 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/27 18:16:54 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/28 15:22:37 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	fill_dat(int argc, char **argv, t_datos *dat)
 	dat->time_to_die = (uint64_t)ft_atoi(argv[2]);
 	dat->time_to_eat = (uint64_t)ft_atoi(argv[3]);
 	dat->time_to_sleep = (uint64_t)ft_atoi(argv[4]);
-	printf("eating_bool: %i\n", dat->eating_bool);
 	if (dat->eating_bool)
 		dat->times_eating = ft_atoi(argv[5]);
 	dat->time_start = gettime();
@@ -40,25 +39,26 @@ void	fill_dat(int argc, char **argv, t_datos *dat)
 		pthread_mutex_unlock(&fork_mutex[i]);
 		i++;
 	}
-	pthread_mutex_init(dat->printing, NULL);
-	pthread_mutex_unlock(dat->printing);
+	pthread_mutex_init(&dat->printing, NULL);
+	pthread_mutex_unlock(&dat->printing);
 	dat->fork_mutex = fork_mutex;
 }
 
 void	fill_philo(t_datos *dat, t_philo *phil, int i)
 {
+	phil->has_problems = 0;
 	phil->is_dead = &dat->is_dead;
 	phil->time_to_die = dat->time_to_die;
 	phil->time_to_eat = dat->time_to_eat;
 	phil->time_to_sleep = dat->time_to_sleep;
 	phil->times_eating = dat->times_eating;
-	phil->im_the = i;
+	phil->im_the = i + 1;
 	phil->time_start = dat->time_start;
 	phil->eating_bool = dat->eating_bool;
 	if (i == dat->number_of_philo - 1)
-		phil->r_fork = dat->fork_mutex[0];
+		phil->r_fork = &dat->fork_mutex[0];
 	else
-		phil->r_fork = dat->fork_mutex[i + 1];
-	phil->l_fork = dat->fork_mutex[i];
-	phil->printing = dat->printing;
+		phil->r_fork = &dat->fork_mutex[i + 1];
+	phil->l_fork = &dat->fork_mutex[i];
+	phil->printing = &dat->printing;
 }

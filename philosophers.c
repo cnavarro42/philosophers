@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/26 19:22:44 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/28 15:38:54 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,18 @@ int	main(int argc, char **argv)
 		if (0 != pthread_create(&dat->philo[i], NULL, philo_routine, &dat->phil[i]))
 			ft_strerror("Hilo no creado correctamente", 4);
 		i++;
+	}
+	i = 0;
+	while (dat->is_dead == 0)
+	{
+		if (dat->phil[i].has_problems == 1)
+		{
+			if ((gettime() - dat->phil[i].last_time_eating) > dat->time_to_die)
+				you_died(&dat->phil[i]);
+		}
+		i++;
+		if (i >= dat->number_of_philo)
+			i = 0;
 	}
 	i = 0;
 	while (i < dat->number_of_philo)
