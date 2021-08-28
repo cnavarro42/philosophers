@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:44:55 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/28 13:25:28 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/28 16:27:42 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	printf_choice(int num, t_philo *phil)
 	if	(*phil->is_dead == 0)
 	{
 		if (num == 1)
-			printf("[ %7llu ] Philosopher %i take a fork\n",
+			printf("[ %7llu ] Philosopher %i take the left fork\n",
 				gettime() - phil->time_start, phil->im_the);
 		else if (num == 2)
 			printf("[ %7llu ] Philosopher %i is eating\n",
@@ -50,7 +50,13 @@ void	printf_choice(int num, t_philo *phil)
 			printf("[ %7llu ] Philosopher %i is thinking\n",
 				gettime() - phil->time_start, phil->im_the);
 		else if (num == 5)
-			printf("[ %7llu ] Philosopher %i release a fork\n",
+			printf("[ %7llu ] Philosopher %i release the left fork\n",
+				gettime() - phil->time_start, phil->im_the);
+		else if (num == 6)
+			printf("[ %7llu ] Philosopher %i take the right fork\n",
+				gettime() - phil->time_start, phil->im_the);
+		else if (num == 7)
+			printf("[ %7llu ] Philosopher %i release the right fork\n",
 				gettime() - phil->time_start, phil->im_the);
 		else
 			printf("Bad number");
