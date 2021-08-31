@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 13:23:37 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/28 15:22:37 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 11:54:22 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,17 @@ void	fill_dat(int argc, char **argv, t_datos *dat)
 		i++;
 	}
 	pthread_mutex_init(&dat->printing, NULL);
+	pthread_mutex_init(&dat->eat_or_die, NULL);
+	pthread_mutex_init(&dat->timeget, NULL);
 	pthread_mutex_unlock(&dat->printing);
+	pthread_mutex_unlock(&dat->eat_or_die);
+	pthread_mutex_unlock(&dat->timeget);
 	dat->fork_mutex = fork_mutex;
 }
 
 void	fill_philo(t_datos *dat, t_philo *phil, int i)
 {
+	phil->number_of_philo = dat->number_of_philo;
 	phil->has_problems = 0;
 	phil->is_dead = &dat->is_dead;
 	phil->time_to_die = dat->time_to_die;
@@ -61,4 +66,6 @@ void	fill_philo(t_datos *dat, t_philo *phil, int i)
 		phil->r_fork = &dat->fork_mutex[i + 1];
 	phil->l_fork = &dat->fork_mutex[i];
 	phil->printing = &dat->printing;
+	phil->eat_or_die = &dat->eat_or_die;
+	phil->timeget = &dat->timeget;
 }

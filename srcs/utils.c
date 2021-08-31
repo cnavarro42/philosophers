@@ -6,11 +6,12 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:44:55 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/28 16:27:42 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 11:56:07 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philosophers.h"
+
 
 uint64_t gettime(void)
 {
@@ -23,13 +24,13 @@ uint64_t gettime(void)
 	return (mseconds);
 }
 
-void	ft_usleep(uint64_t time)
+void	ft_usleep(uint64_t time, t_philo *phil)
 {
 	uint64_t	finish;
 
 	finish = gettime() + time;
 	while (gettime() < finish)
-		usleep(1);
+		usleep(phil->number_of_philo);
 }
 
 void	printf_choice(int num, t_philo *phil)
@@ -73,9 +74,9 @@ void	sleep_time(t_philo *phil)
 	if ((time_elapsed + phil->time_to_sleep) > phil->time_to_die)
 	{
 		//printf("Philosopher %i Tiene que dormir %llu y luego morir\n", phil->im_the, phil->time_to_die - time_elapsed);
-		ft_usleep(phil->time_to_die - time_elapsed);
+		ft_usleep(phil->time_to_die - time_elapsed, phil);
 		you_died(phil);
 	}
 	else
-		ft_usleep(phil->time_to_sleep);
+		ft_usleep(phil->time_to_sleep, phil);
 }
