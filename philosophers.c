@@ -6,11 +6,18 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 15:59:59 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 18:46:24 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philosophers.h"
+
+static void	flying_free(t_datos *dat)
+{
+	free(dat->phil);
+	free(dat->philo);
+	free(dat->fork_mutex);
+}
 
 static void grader(t_datos *dat)
 {
@@ -72,6 +79,6 @@ int	main(int argc, char **argv)
 	grader(dat);
 	voyeur_bucle(dat);
 	waiting_room(dat);
+	flying_free(dat);
 	return (0);
-	free(dat);
 }

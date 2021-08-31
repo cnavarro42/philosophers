@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 15:21:41 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 16:01:01 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 18:49:30 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void you_died(t_philo *phil)
 	}
 }
 
-static void cutlery_select(t_philo *phil)
-{	
+static void eating(t_philo *phil)
+{
 	if (phil->im_the % 2)
 	{
 		phil->has_problems = 1;
@@ -44,11 +44,6 @@ static void cutlery_select(t_philo *phil)
 		phil->has_problems = 0;
 		printf_choice(1, phil);
 	}
-}
-
-static void eating(t_philo *phil)
-{
-	cutlery_select(phil);
 	pthread_mutex_lock(phil->eat_or_die);
 	pthread_mutex_lock(phil->timeget);
 	phil->last_time_eating = gettime();
