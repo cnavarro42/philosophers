@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:44:55 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 11:56:07 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 16:19:27 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,41 @@ uint64_t gettime(void)
 void	ft_usleep(uint64_t time, t_philo *phil)
 {
 	uint64_t	finish;
+	uint64_t	getaux;
 
+	pthread_mutex_lock(phil->timeget);
 	finish = gettime() + time;
-	while (gettime() < finish)
+	getaux = gettime();
+	pthread_mutex_unlock(phil->timeget);
+	while (getaux < finish)
+	{
+		pthread_mutex_lock(phil->timeget);
+		getaux = gettime();
+		pthread_mutex_unlock(phil->timeget);
 		usleep(phil->number_of_philo);
+	}
+}
+
+static void	printf_choice2(int num, t_philo *phil)
+{
+	if 	(num == 5)
+		printf("[ %7llu ] Philosopher %i release the left fork\n",
+			gettime() - phil->time_start, phil->im_the);
+	else if (num == 6)
+		printf("[ %7llu ] Philosopher %i take the right fork\n",
+			gettime() - phil->time_start, phil->im_the);
+	else if (num == 7)
+		printf("[ %7llu ] Philosopher %i release the right fork\n",
+			gettime() - phil->time_start, phil->im_the);
+	else
+		printf("Bad number");
 }
 
 void	printf_choice(int num, t_philo *phil)
 {
-	pthread_mutex_lock(phil->printing);
 	if	(*phil->is_dead == 0)
 	{
+		pthread_mutex_lock(phil->printing);
 		if (num == 1)
 			printf("[ %7llu ] Philosopher %i take the left fork\n",
 				gettime() - phil->time_start, phil->im_the);
@@ -50,30 +74,20 @@ void	printf_choice(int num, t_philo *phil)
 		else if (num == 4)
 			printf("[ %7llu ] Philosopher %i is thinking\n",
 				gettime() - phil->time_start, phil->im_the);
-		else if (num == 5)
-			printf("[ %7llu ] Philosopher %i release the left fork\n",
-				gettime() - phil->time_start, phil->im_the);
-		else if (num == 6)
-			printf("[ %7llu ] Philosopher %i take the right fork\n",
-				gettime() - phil->time_start, phil->im_the);
-		else if (num == 7)
-			printf("[ %7llu ] Philosopher %i release the right fork\n",
-				gettime() - phil->time_start, phil->im_the);
-		else
-			printf("Bad number");
+		else 
+			printf_choice2(num, phil);
+		pthread_mutex_unlock(phil->printing);
 	}
-	pthread_mutex_unlock(phil->printing);
 }
 
 void	sleep_time(t_philo *phil)
 {
 	uint64_t	time_elapsed;
-
+	pthread_mutex_lock(phil->timeget);
 	time_elapsed = (gettime() - phil->last_time_eating);
-	//printf("Philosopher %i Tiempo hasta volver a comer: %llu, Tiempo maximo: %llu \n", phil->im_the, (time_elapsed + phil->time_to_sleep), phil->time_to_die);
+	pthread_mutex_unlock(phil->timeget);
 	if ((time_elapsed + phil->time_to_sleep) > phil->time_to_die)
 	{
-		//printf("Philosopher %i Tiene que dormir %llu y luego morir\n", phil->im_the, phil->time_to_die - time_elapsed);
 		ft_usleep(phil->time_to_die - time_elapsed, phil);
 		you_died(phil);
 	}

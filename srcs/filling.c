@@ -6,18 +6,14 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 13:23:37 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 11:54:22 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 16:05:00 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philosophers.h"
 
-void	fill_dat(int argc, char **argv, t_datos *dat)
+static void	fill_dat2(int argc, char **argv, t_datos *dat)
 {
-	pthread_mutex_t *fork_mutex;
-
-	int i;
-	i = 0;
 	if (argc == 6)
 		dat->eating_bool = 1;
 	else
@@ -28,8 +24,17 @@ void	fill_dat(int argc, char **argv, t_datos *dat)
 	dat->time_to_sleep = (uint64_t)ft_atoi(argv[4]);
 	if (dat->eating_bool)
 		dat->times_eating = ft_atoi(argv[5]);
-	dat->time_start = gettime();
 	dat->is_dead = 0;
+}
+
+void	fill_dat(int argc, char **argv, t_datos *dat)
+{
+	pthread_mutex_t *fork_mutex;
+
+	int i;
+
+	i = 0;
+	fill_dat2(argc, argv, dat);
 	dat->philo = malloc(sizeof(pthread_t) * dat->number_of_philo);
 	dat->phil = malloc(sizeof(t_philo) * dat->number_of_philo);
 	fork_mutex = malloc(sizeof(pthread_mutex_t) * dat->number_of_philo);
@@ -44,6 +49,9 @@ void	fill_dat(int argc, char **argv, t_datos *dat)
 	pthread_mutex_init(&dat->timeget, NULL);
 	pthread_mutex_unlock(&dat->printing);
 	pthread_mutex_unlock(&dat->eat_or_die);
+	pthread_mutex_unlock(&dat->timeget);
+	pthread_mutex_lock(&dat->timeget);
+	dat->time_start = gettime();
 	pthread_mutex_unlock(&dat->timeget);
 	dat->fork_mutex = fork_mutex;
 }

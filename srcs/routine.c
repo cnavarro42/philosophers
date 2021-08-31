@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 15:21:41 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 12:08:31 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 16:01:01 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ void you_died(t_philo *phil)
 	if	(*phil->is_dead == 0)
 	{
 		*phil->is_dead = 1;
+		pthread_mutex_lock(phil->timeget);
 		printf("[ %7llu ] Philosopher %i has died\n",
 			gettime() - phil->time_start, phil->im_the);
+		pthread_mutex_unlock(phil->timeget);
 	}
 }
 
-void eating(t_philo *phil)
-{
-	//printf("%llu//%llu", (gettime() - phil->last_time_eating), phil->time_to_die);
+static void cutlery_select(t_philo *phil)
+{	
 	if (phil->im_the % 2)
 	{
 		phil->has_problems = 1;
@@ -43,8 +44,15 @@ void eating(t_philo *phil)
 		phil->has_problems = 0;
 		printf_choice(1, phil);
 	}
+}
+
+static void eating(t_philo *phil)
+{
+	cutlery_select(phil);
 	pthread_mutex_lock(phil->eat_or_die);
+	pthread_mutex_lock(phil->timeget);
 	phil->last_time_eating = gettime();
+	pthread_mutex_unlock(phil->timeget);
 	printf_choice(2, phil);
 	pthread_mutex_unlock(phil->eat_or_die);
 	ft_usleep(phil->time_to_eat, phil);
@@ -54,15 +62,10 @@ void eating(t_philo *phil)
 	printf_choice(7, phil);
 }
 
-void sleeping(t_philo *phil)
+static void sleeping(t_philo *phil)
 {
 	printf_choice(3, phil);
 	sleep_time(phil);
-}
-
-void thinking(t_philo *phil)
-{
-	printf_choice(4, phil);
 }
 
 void	*philo_routine(void *arg)
@@ -77,7 +80,7 @@ void	*philo_routine(void *arg)
 	{
 		eating(phil);
 		sleeping(phil);
-		thinking(phil);
+		printf_choice(4, phil);
 		if (phil->eating_bool == 1)
 			phil->times_eating--;
 	}

@@ -6,49 +6,72 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 12:03:44 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 15:59:59 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philosophers.h"
 
-int	main(int argc, char **argv)
+static void grader(t_datos *dat)
 {
-	t_datos *dat;
 	int i;
-	
 
-	dat = ft_calloc(sizeof(t_datos), 1);
-	arg_errors(argc, argv);
-	fill_dat(argc, argv, dat);
 	i = 0;
 	while (i < dat->number_of_philo)
 	{
 		fill_philo(dat, &dat->phil[i], i);
 		if (0 != pthread_create(&dat->philo[i], NULL, philo_routine, &dat->phil[i]))
-			ft_strerror("Hilo no creado correctamente", 4); //no puedo usar exit
+			perror("Hilo no creado correctamente");
 		i++;
 	}
-	i = 0;
-	while (dat->is_dead == 0)
-	{
-		if (dat->phil[i].has_problems == 1)
-		{
-			pthread_mutex_lock(&dat->eat_or_die);
-			if ((gettime() - dat->phil[i].last_time_eating) > dat->time_to_die)
-				you_died(&dat->phil[i]);
-		}
-		pthread_mutex_unlock(&dat->eat_or_die);
-		i++;
-		if (i >= dat->number_of_philo)
-			i = 0;
-	}
+}
+
+static void waiting_room(t_datos *dat)
+{
+	int i;
+
 	i = 0;
 	while (i < dat->number_of_philo)
 	{
 		pthread_join(dat->philo[i], NULL);
 		i++;
 	}
+}
+
+static void voyeur_bucle(t_datos *dat)
+{
+	int i;
+
+	i = 0;
+	while (dat->is_dead == 0 && dat->phil[i].times_eating > 0)
+	{
+		if (dat->phil[i].has_problems == 1)
+		{
+			pthread_mutex_lock(&dat->eat_or_die);
+			pthread_mutex_lock(&dat->timeget);
+			if ((gettime() - dat->phil[i].last_time_eating) > dat->time_to_die)
+			{
+				pthread_mutex_unlock(&dat->timeget);
+				you_died(&dat->phil[i]);
+			}
+			pthread_mutex_unlock(&dat->timeget);				
+		}
+		pthread_mutex_unlock(&dat->eat_or_die);
+		i++;
+		if (i >= dat->number_of_philo)
+			i = 0;
+	}
+}
+int	main(int argc, char **argv)
+{
+	t_datos *dat;
+	
+	dat = ft_calloc(sizeof(t_datos), 1);
+	arg_errors(argc, argv);
+	fill_dat(argc, argv, dat);
+	grader(dat);
+	voyeur_bucle(dat);
+	waiting_room(dat);
 	return (0);
 	free(dat);
 }
