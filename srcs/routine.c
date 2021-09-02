@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 15:21:41 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 18:49:30 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:02:20 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void you_died(t_philo *phil)
 		printf("[ %7llu ] Philosopher %i has died\n",
 			gettime() - phil->time_start, phil->im_the);
 		pthread_mutex_unlock(phil->timeget);
+		pthread_mutex_unlock(phil->l_fork);
+		pthread_mutex_unlock(phil->r_fork);
 	}
 }
 
@@ -69,8 +71,6 @@ void	*philo_routine(void *arg)
 
 	phil = (t_philo *)arg;
 	phil->last_time_eating = phil->time_start;
-	if (phil->eating_bool == 0)
-		phil->times_eating = 1;
 	while (*phil->is_dead == 0 && phil->times_eating > 0)
 	{
 		eating(phil);

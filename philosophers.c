@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 18:46:24 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/02 11:52:21 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ static void waiting_room(t_datos *dat)
 static void voyeur_bucle(t_datos *dat)
 {
 	int i;
+	int philos;
 
+	philos = dat->number_of_philo;
 	i = 0;
 	while (dat->is_dead == 0 && dat->phil[i].times_eating > 0)
 	{
@@ -61,12 +63,13 @@ static void voyeur_bucle(t_datos *dat)
 				pthread_mutex_unlock(&dat->timeget);
 				you_died(&dat->phil[i]);
 			}
-			pthread_mutex_unlock(&dat->timeget);				
+			pthread_mutex_unlock(&dat->timeget);
 		}
 		pthread_mutex_unlock(&dat->eat_or_die);
 		i++;
-		if (i >= dat->number_of_philo)
+		if (i >= (philos))
 			i = 0;
+		usleep(1);
 	}
 }
 int	main(int argc, char **argv)
@@ -74,7 +77,8 @@ int	main(int argc, char **argv)
 	t_datos *dat;
 	
 	dat = ft_calloc(sizeof(t_datos), 1);
-	arg_errors(argc, argv);
+	if (arg_errors(argc, argv))
+		return (-1);
 	fill_dat(argc, argv, dat);
 	grader(dat);
 	voyeur_bucle(dat);

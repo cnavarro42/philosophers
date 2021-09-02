@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 13:23:37 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 16:05:00 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:00:27 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,6 @@ void	fill_philo(t_datos *dat, t_philo *phil, int i)
 	phil->printing = &dat->printing;
 	phil->eat_or_die = &dat->eat_or_die;
 	phil->timeget = &dat->timeget;
+	if (phil->eating_bool == 0)
+		phil->times_eating = 1;
 }

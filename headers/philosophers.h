@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 11:07:35 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 16:05:25 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/08/31 18:57:01 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct			s_datos
 }						t_datos;
 
 void		*philo_routine(void *arg);
-void		arg_errors(int argc, char **argv);
+int		arg_errors(int argc, char **argv);
 void		fill_philo(t_datos *dat, t_philo *phil, int i);
 void		fill_dat(int argc, char **argv, t_datos *dat);
 void		ft_usleep(uint64_t time, t_philo *phil);
