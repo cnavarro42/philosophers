@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 13:23:37 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/01 18:00:27 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/02 12:08:38 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,15 @@ static void	fill_dat2(int argc, char **argv, t_datos *dat)
 
 void	fill_dat(int argc, char **argv, t_datos *dat)
 {
-	pthread_mutex_t *fork_mutex;
-
-	int i;
+	pthread_mutex_t	*fork_mutex;
+	int				i;
 
 	i = 0;
 	fill_dat2(argc, argv, dat);
 	dat->philo = malloc(sizeof(pthread_t) * dat->number_of_philo);
 	dat->phil = malloc(sizeof(t_philo) * dat->number_of_philo);
 	fork_mutex = malloc(sizeof(pthread_mutex_t) * dat->number_of_philo);
-	while(i < dat->number_of_philo)
+	while (i < dat->number_of_philo)
 	{
 		pthread_mutex_init(&fork_mutex[i], NULL);
 		pthread_mutex_unlock(&fork_mutex[i]);

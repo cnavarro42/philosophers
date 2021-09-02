@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 11:07:35 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/31 18:57:01 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/02 12:07:16 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct			s_philo
+typedef struct s_philo
 {
 	uint64_t			time_to_die;
 	uint64_t			time_to_eat;
@@ -36,9 +36,9 @@ typedef struct			s_philo
 	pthread_mutex_t		*timeget;
 	int					*is_dead;
 	int					has_problems;
-}						t_philo;
+}				t_philo;
 
-typedef struct			s_datos
+typedef struct s_datos
 {
 	int					number_of_philo;
 	uint64_t			time_to_die;
@@ -54,10 +54,10 @@ typedef struct			s_datos
 	pthread_mutex_t		eat_or_die;
 	pthread_mutex_t		timeget;
 	int					is_dead;
-}						t_datos;
+}				t_datos;
 
 void		*philo_routine(void *arg);
-int		arg_errors(int argc, char **argv);
+int			arg_errors(int argc, char **argv);
 void		fill_philo(t_datos *dat, t_philo *phil, int i);
 void		fill_dat(int argc, char **argv, t_datos *dat);
 void		ft_usleep(uint64_t time, t_philo *phil);

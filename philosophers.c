@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/02 11:52:21 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/02 12:05:14 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,24 @@ static void	flying_free(t_datos *dat)
 	free(dat->fork_mutex);
 }
 
-static void grader(t_datos *dat)
+static void	grader(t_datos *dat)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < dat->number_of_philo)
 	{
 		fill_philo(dat, &dat->phil[i], i);
-		if (0 != pthread_create(&dat->philo[i], NULL, philo_routine, &dat->phil[i]))
+		if (0 != pthread_create(&dat->philo[i], NULL
+				, philo_routine, &dat->phil[i]))
 			perror("Hilo no creado correctamente");
 		i++;
 	}
 }
 
-static void waiting_room(t_datos *dat)
+static void	waiting_room(t_datos *dat)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < dat->number_of_philo)
@@ -45,10 +46,10 @@ static void waiting_room(t_datos *dat)
 	}
 }
 
-static void voyeur_bucle(t_datos *dat)
+static void	voyeur_bucle(t_datos *dat)
 {
-	int i;
-	int philos;
+	int	i;
+	int	philos;
 
 	philos = dat->number_of_philo;
 	i = 0;
@@ -72,10 +73,11 @@ static void voyeur_bucle(t_datos *dat)
 		usleep(1);
 	}
 }
+
 int	main(int argc, char **argv)
 {
-	t_datos *dat;
-	
+	t_datos	*dat;
+
 	dat = ft_calloc(sizeof(t_datos), 1);
 	if (arg_errors(argc, argv))
 		return (-1);

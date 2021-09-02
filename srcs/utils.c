@@ -6,21 +6,19 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:44:55 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/01 16:39:52 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/02 12:13:14 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/philosophers.h"
 
-
-uint64_t gettime(void)
+uint64_t	gettime(void)
 {
-	struct timeval time;
-	uint64_t mseconds;
+	struct timeval	time;
+	uint64_t		mseconds;
 
 	gettimeofday(&time, NULL);
 	mseconds = (uint64_t)((time.tv_sec * 1000) + (time.tv_usec / 1000));
-
 	return (mseconds);
 }
 
@@ -44,7 +42,7 @@ void	ft_usleep(uint64_t time, t_philo *phil)
 
 static void	printf_choice2(int num, t_philo *phil)
 {
-	if 	(num == 5)
+	if (num == 5)
 		printf("[ %7llu ] Philosopher %i release the left fork\n",
 			gettime() - phil->time_start, phil->im_the);
 	else if (num == 6)
@@ -59,7 +57,7 @@ static void	printf_choice2(int num, t_philo *phil)
 
 void	printf_choice(int num, t_philo *phil)
 {
-	if	(*phil->is_dead == 0)
+	if (*phil->is_dead == 0)
 	{
 		pthread_mutex_lock(phil->printing);
 		if (num == 1)
@@ -74,7 +72,7 @@ void	printf_choice(int num, t_philo *phil)
 		else if (num == 4)
 			printf("[ %7llu ] Philosopher %i is thinking\n",
 				gettime() - phil->time_start, phil->im_the);
-		else 
+		else
 			printf_choice2(num, phil);
 		pthread_mutex_unlock(phil->printing);
 	}
@@ -83,6 +81,7 @@ void	printf_choice(int num, t_philo *phil)
 void	sleep_time(t_philo *phil)
 {
 	uint64_t	time_elapsed;
+
 	pthread_mutex_lock(phil->timeget);
 	time_elapsed = (gettime() - phil->last_time_eating);
 	pthread_mutex_unlock(phil->timeget);
