@@ -1,16 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 11:37:13 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/10 16:27:34 by cnavarro         ###   ########.fr       */
+/*   Created: 2021/09/07 13:59:08 by cnavarro          #+#    #+#             */
+/*   Updated: 2021/09/07 14:04:01 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../headers/philosophers.h"
+
+void	*ft_calloc(size_t n, size_t s)
+{
+	void	*ptr;
+
+	ptr = malloc(n * s);
+	if (ptr == NULL)
+		return (NULL);
+	ft_bzero(ptr, n * s);
+	return (ptr);
+}
+
+void	ft_bzero(void *str, size_t n)
+{
+	unsigned char	*cad;
+	size_t			i;
+
+	cad = (unsigned char *)str;
+	i = 0;
+	while (n > i)
+	{
+		cad[i] = '\0';
+		i++;
+	}
+}
 
 static int	ft_space_spaces(const char *str, int i)
 {

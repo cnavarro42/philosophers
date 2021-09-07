@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/07 13:54:24 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/07 18:16:15 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 
 static void	flying_free(t_datos *dat)
 {
+	int	i;
+
+	i = 0;
+	while (i < dat->number_of_philo)
+	{
+		pthread_mutex_destroy(&dat->fork_mutex[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&dat->printing);
+	pthread_mutex_destroy(&dat->eat_or_die);
+	pthread_mutex_destroy(&dat->timeget);
 	free(dat->phil);
 	free(dat->philo);
 	free(dat->fork_mutex);

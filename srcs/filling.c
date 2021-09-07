@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/12 13:23:37 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/07 12:36:30 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/07 16:13:47 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	fill_dat2(int argc, char **argv, t_datos *dat)
 		dat->times_eating = ft_atoi(argv[5]);
 	dat->is_dead = 0;
 	dat->magic = 0;
-	printf("%p\n", &dat->magic);
 }
 
 void	fill_dat(int argc, char **argv, t_datos *dat)
@@ -63,7 +62,6 @@ void	fill_philo(t_datos *dat, t_philo *phil, int i)
 	phil->has_problems = 0;
 	phil->is_dead = &dat->is_dead;
 	phil->magic = &dat->magic;
-	printf("%p\n", phil->magic);
 	phil->time_to_die = dat->time_to_die;
 	phil->time_to_eat = dat->time_to_eat;
 	phil->time_to_sleep = dat->time_to_sleep;

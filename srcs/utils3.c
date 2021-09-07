@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/13 15:46:28 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/08/10 16:28:57 by cnavarro         ###   ########.fr       */
+/*   Created: 2021/09/07 14:03:42 by cnavarro          #+#    #+#             */
+/*   Updated: 2021/09/07 15:59:38 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../headers/philosophers.h"
 
-t_list	*ft_lstnew(void *content)
+int	ft_isdigit(int i)
 {
-	t_list	*ret;
-
-	ret = malloc(sizeof(t_list));
-	if (ret != NULL)
-	{
-		ret->content = (void *)content;
-		ret->next = NULL;
-	}
-	return (ret);
+	if (i >= '0' && i <= '9')
+		return (1);
+	return (0);
 }
