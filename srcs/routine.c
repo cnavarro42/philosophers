@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 15:21:41 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/07 13:04:18 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/07 13:46:25 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	*philo_routine(void *arg)
 		if (phil->times_eating == 0)
 			*phil->magic = *phil->magic + 1;
 		if (*phil->magic == phil->number_of_philo)
-			break;
+			break ;
 	}
 	return (NULL);
 }
