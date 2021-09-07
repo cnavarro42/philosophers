@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/11 15:21:41 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/02 12:23:06 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/07 13:04:18 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static void	eating(t_philo *phil)
 
 static void	sleeping(t_philo *phil)
 {
+	if (phil->number_of_philo % 2)
+		ft_usleep((phil->time_to_eat - phil->time_to_sleep) + 1, phil);
 	printf_choice(3, phil);
 	sleep_time(phil);
 }
@@ -76,13 +78,20 @@ void	*philo_routine(void *arg)
 
 	phil = (t_philo *)arg;
 	phil->last_time_eating = phil->time_start;
-	while (*phil->is_dead == 0 && phil->times_eating > 0)
+	if (!(phil->number_of_philo % 2))
+		if (!(phil->im_the % 2))
+			ft_usleep(10, phil);
+	while (*phil->is_dead == 0)
 	{
 		eating(phil);
 		sleeping(phil);
 		printf_choice(4, phil);
 		if (phil->eating_bool == 1)
 			phil->times_eating--;
+		if (phil->times_eating == 0)
+			*phil->magic = *phil->magic + 1;
+		if (*phil->magic == phil->number_of_philo)
+			break;
 	}
 	return (NULL);
 }

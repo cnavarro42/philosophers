@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 11:07:35 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/02 12:07:16 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/07 12:33:46 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_philo
 	pthread_mutex_t		*eat_or_die;
 	pthread_mutex_t		*timeget;
 	int					*is_dead;
+	int					*magic;
 	int					has_problems;
 }				t_philo;
 
@@ -54,6 +55,7 @@ typedef struct s_datos
 	pthread_mutex_t		eat_or_die;
 	pthread_mutex_t		timeget;
 	int					is_dead;
+	int					magic;
 }				t_datos;
 
 void		*philo_routine(void *arg);

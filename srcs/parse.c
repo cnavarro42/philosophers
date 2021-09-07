@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 13:08:14 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/02 12:10:53 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/02 17:44:39 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	arg_errors3(char **argv)
 		{
 			if (!(ft_isdigit(argv[i][j])))
 			{
-				perror("Invalid argument: No numerical");
+				printf("Invalid argument: No numerical");
 				return (1);
 			}
 			j++;
@@ -39,22 +39,22 @@ static int	arg_errors2(int argc, char **argv)
 {
 	if (!(argc == 5 || argc == 6))
 	{
-		perror("Number of arguments invalid");
+		printf("Number of arguments invalid");
 		return (1);
 	}
 	if (ft_atoi(argv[1]) > 200)
 	{
-		perror("This is too much");
+		printf("This is too much");
 		return (1);
 	}
 	if (argc == 6 && ft_atoi(argv[5]) > 1000)
 	{
-		perror("This is too much");
+		printf("This is too much");
 		return (1);
 	}
 	if (ft_atoi(argv[1]) == 0)
 	{
-		perror("No philosophers");
+		printf("No philosophers");
 		return (1);
 	}
 	return (0);
@@ -73,7 +73,7 @@ int	arg_errors(int argc, char **argv)
 	{
 		if (ft_atoi(argv[i]) > 10000)
 		{
-			perror("This is too much");
+			printf("This is too much");
 			return (1);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/02 12:05:14 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/07 12:50:31 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	grader(t_datos *dat)
 		fill_philo(dat, &dat->phil[i], i);
 		if (0 != pthread_create(&dat->philo[i], NULL
 				, philo_routine, &dat->phil[i]))
-			perror("Hilo no creado correctamente");
+			printf("Hilo no creado correctamente");
 		i++;
 	}
 }

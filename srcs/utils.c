@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 16:44:55 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/02 12:13:14 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/02 18:25:37 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	printf_choice(int num, t_philo *phil)
 			printf("[ %7llu ] Philosopher %i take the left fork\n",
 				gettime() - phil->time_start, phil->im_the);
 		else if (num == 2)
-			printf("[ %7llu ] Philosopher %i is eating\n",
-				phil->last_time_eating - phil->time_start, phil->im_the);
+			printf("[ %7llu ] Philosopher %i is eating, %i, %i\n",
+				phil->last_time_eating - phil->time_start, phil->im_the, *phil->magic, *phil->is_dead);
 		else if (num == 3)
 			printf("[ %7llu ] Philosopher %i is sleeping\n",
 				gettime() - phil->time_start, phil->im_the);
