@@ -6,7 +6,7 @@
 /*   By: cnavarro <cnavarro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/10 12:35:29 by cnavarro          #+#    #+#             */
-/*   Updated: 2021/09/08 10:49:14 by cnavarro         ###   ########.fr       */
+/*   Updated: 2021/09/13 14:48:54 by cnavarro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,6 @@ static void	voyeur_bucle(t_datos *dat)
 	}
 }
 
-void hola(void)
-{
-	system("leaks philo");
-}
-
 int	main(int argc, char **argv)
 {
 	t_datos	*dat;
@@ -103,6 +98,5 @@ int	main(int argc, char **argv)
 	waiting_room(dat);
 	flying_free(dat);
 	free(dat);
-	atexit(hola);
 	return (0);
 }
